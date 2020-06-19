@@ -67,7 +67,7 @@ $$Attention(Q, K, V) = softmax(attention_score(Q, K) * V$$
 
 ![](https://bj.bcebos.com/v1/ltwbucket/blog_images/20200619-attention/p2_img4.png)
 
-* CCNet 的具体做法是，对于$Q$ 上的一个点 $u$,我们都可以得到对应的特征向量$Q_u \in R^C$，对于这个点对应的十字形区域，我们可以从$K$ 中提取对应的特征，构成$\Omega_u \in R^{(H+W-1)*C}$，针对$Q$ 和$\Omega$ 进行矩阵乘法，则可以得到attention map 为 $A \in R^{(H+W-1)*H*W}$。最后对$V$ 以同样的方式提取十字形特征并进行矩阵乘法，则可以得到最后的结果。
+* CCNet 的具体做法是，对于$Q$ 上的一个点 $u$,我们都可以得到对应的特征向量$Q_u \in R^C$，对于这个点对应的十字形区域，我们可以从$K$ 中提取对应的特征，构成$\Omega_u \in R^{(H+W-1)*C}$ ，针对$Q$ 和$\Omega$ 进行矩阵乘法，则可以得到attention map 为 $A \in R^{(H+W-1)*H*W}$。最后对$V$ 以同样的方式提取十字形特征并进行矩阵乘法，则可以得到最后的结果。
 
 ![](https://bj.bcebos.com/v1/ltwbucket/blog_images/20200619-attention/p2_img3.png)
 
@@ -95,7 +95,7 @@ $$Attention(Q, K, V) = softmax(attention_score(Q, K) * V$$
 
 ## Linformer: Self-Attention with Linear Complexity
 
-* Attention的过程如上所说，可以看作是 $Softmax(N*C x C*N) x N*C$，这篇文章对N做降维，将attention 转化为$Softmax(N*C x C*K) x K*C$，在K是定值的情况下，既将复杂度从 $O(N^2)$ 降低到了$O(NK)$ 
+* Attention的过程如上所说，可以看作是 $Softmax(N*C x C*N) x N*C$ ，这篇文章对N做降维，将attention 转化为 $Softmax(N*C x C*K) x K*C$ ，在K是定值的情况下，既将复杂度从 $O(N^2)$ 降低到了$O(NK)$ 
 
 * 这篇文章大部分的篇幅，是在证明这样降低维度和原来的结果是近似的，没看太懂证明部分
 
@@ -109,7 +109,7 @@ $$Attention(Q, K, V) = softmax(attention_score(Q, K) * V$$
 
 ![](https://bj.bcebos.com/v1/ltwbucket/blog_images/20200619-attention/p3_img1.png)
 
-这篇文章的主要思路是：利用泰勒展开，将 $f(Q \in R^{NC*1}, K\in R^{1*NC})V\in R^{NC*1}$ 近似成了 $Q \in R^{NC*(P+1)} * K^T\in R^{(P+1)*NC} * V\in  R^{NC*1}$。从而可以通过先计算后两项，将复杂度从$O((NC)^2)$ 降低到了 $O(NCP)$
+这篇文章的主要思路是：利用泰勒展开，将 $f(Q \in R^{NC*1}, K\in R^{1*NC})V\in R^{NC*1}$ 近似成了 $Q \in R^{NC*(P+1)} * K^T\in R^{(P+1)*NC} * V\in  R^{NC*1}$ 。从而可以通过先计算后两项，将复杂度从$O((NC)^2)$ 降低到了 $O(NCP)$
 
 ![](https://bj.bcebos.com/v1/ltwbucket/blog_images/20200619-attention/p3_img2.png)
 
